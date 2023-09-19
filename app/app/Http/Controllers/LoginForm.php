@@ -9,6 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Validator;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 
 class LoginForm extends Controller
@@ -26,7 +27,9 @@ class LoginForm extends Controller
                 ->withErrors($validated)
                 ->withInput();
         } 
-      //   Storage::put('nom.json')
+
+        Storage::put(Str::uuid().'.json', json_encode($validated->validated()));
+
         return redirect('/');
     }
 }
