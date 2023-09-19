@@ -13,7 +13,7 @@
     </head>
     <body class="antialiased">
 
-    <form action="LoginForm" method="POST">
+    <form action="{{route('LoginForm')}}" method="POST">
         @csrf
         <label for="url" >URL :</label>
         <input type="text" name="url" id="url" class="@error('url') is-invalid @enderror">

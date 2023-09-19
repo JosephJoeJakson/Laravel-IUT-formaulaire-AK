@@ -1,7 +1,10 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginForm;
+use App\Http\Controllers\ShowPassword;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -21,4 +24,18 @@ Route::get('/formulaire', function () {
     return view('formulaire');
 });
 
-Route::post('/LoginForm', [LoginForm::class, 'store'])->name('LoginForm');
+Route::get('/motdepasse', [ShowPassword::class, 'show'])->name('motdepasse');
+
+Route::post('/formulaire', [LoginForm::class, 'store'])->name('LoginForm');
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+require __DIR__.'/auth.php';

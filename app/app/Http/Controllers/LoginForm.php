@@ -11,6 +11,10 @@ use Illuminate\View\View;
 use Validator;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Password;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 
 class LoginForm extends Controller
 {
@@ -22,13 +26,18 @@ class LoginForm extends Controller
             'password' => 'required|string',
         ]);
 
-        if ($validated->fails()) {
-            return redirect('/formulaire')
-                ->withErrors($validated)
-                ->withInput();
-        } 
+        $password = Password::create([
+            'site' => $request->url,
+            'login' => $request->email,
+            'password' => Hash::make($request->password),
+            'user_id'=>Auth::user()->id,
+        ]);
 
-        Storage::put(Str::uuid().'.json', json_encode($validated->validated()));
+        return redirect('/');
+    }
+
+    public function show(string $id): View
+    {
 
         return redirect('/');
     }
