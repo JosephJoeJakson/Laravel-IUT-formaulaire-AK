@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\Password;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\View\View;
+use Illuminate\Support\Facades\Crypt;
 
 class LoginForm extends Controller
 {
@@ -22,14 +22,14 @@ class LoginForm extends Controller
     {
         $validated = Validator::make($request->all(), [
             'url' => 'required|string|url',
-            'email' => 'required|string|email',
+            'email' => 'required|string',
             'password' => 'required|string',
         ]);
 
         $password = Password::create([
             'site' => $request->url,
             'login' => $request->email,
-            'password' => Hash::make($request->password),
+            'password' => Crypt::encryptString($request->password),
             'user_id'=>Auth::user()->id,
         ]);
 

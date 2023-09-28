@@ -5,24 +5,28 @@ namespace App\Http\Controllers;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Validator;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Storage;
-use App\Models\Password;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Crypt;
+use App\Models\Password;
 
 class ShowPassword extends Controller
 {
     public function show(): View
     {
-        
-        $users = DB::table('passwords')->where('user_id', Auth::user()->id)->get();
- 
-        return view('showpassword', ['passwords' => $users]);
+    $userId = Auth::user()->id;
+    // $passwords = DB::table('passwords')->where('user_id', $userId)->get(); 
+    $passwords = Password::where('user_id', $userId)->get(); 
+    $decryptedPasswords = collect();
+    foreach ($passwords as $login) {
+        $decryptedPassword = Crypt::decryptString($login->password);
+        $login->password = $decryptedPassword;
+        $decryptedPasswords->push($login);
+    }
+    
+    return view('showpassword', ['passwords' => $decryptedPasswords]);
     }
 }

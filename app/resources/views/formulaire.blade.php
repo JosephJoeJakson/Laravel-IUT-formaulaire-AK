@@ -20,8 +20,8 @@
         @error('url')
         <div class="alert alert-danger">{{ $message }}</div>
         @enderror
-        <label for="email">Email : </label>
-        <input type="email" name="email" id="email" class="@error('email') is-invalid @enderror">
+        <label for="email">Login : </label>
+        <input type="text" name="email" id="email" class="@error('email') is-invalid @enderror">
         @error('email')
         <div class="alert alert-danger">{{ $message }}</div>
         @enderror

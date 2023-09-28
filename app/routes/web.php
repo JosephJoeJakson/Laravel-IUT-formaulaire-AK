@@ -4,7 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginForm;
 use App\Http\Controllers\ShowPassword;
-
+use App\Http\Controllers\PasswordController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -24,9 +24,15 @@ Route::get('/formulaire', function () {
     return view('formulaire');
 });
 
+Route::get('/showpassword', [ShowPassword::class, 'show'])->name('showpassword');
+
 Route::get('/motdepasse', [ShowPassword::class, 'show'])->name('motdepasse');
 
 Route::post('/formulaire', [LoginForm::class, 'store'])->name('LoginForm');
+
+Route::get('/editpassword/{id}',  [PasswordController::class, 'edit'])->name('editpassword');
+
+Route::get('/updatepassword/{id}',  [PasswordController::class, 'update'])->name('updatepassword');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
