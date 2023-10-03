@@ -26,6 +26,12 @@ class LoginForm extends Controller
             'password' => 'required|string',
         ]);
 
+        if ($validated->fails()) {
+            return redirect('/formulaire')
+                ->withErrors($validated)
+                ->withInput();
+        }
+        
         $password = Password::create([
             'site' => $request->url,
             'login' => $request->email,
@@ -33,12 +39,14 @@ class LoginForm extends Controller
             'user_id'=>Auth::user()->id,
         ]);
 
-        return redirect('/');
-    }
-
-    public function show(string $id): View
-    {
+        
 
         return redirect('/');
     }
+
+    // public function show(string $id): View
+    // {
+
+    //     return redirect('/');
+    // }
 }

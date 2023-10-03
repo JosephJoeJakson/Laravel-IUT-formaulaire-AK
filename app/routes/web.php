@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginForm;
 use App\Http\Controllers\ShowPassword;
 use App\Http\Controllers\PasswordController;
+use App\Http\Controllers\TeamForm;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,11 +19,15 @@ use App\Http\Controllers\PasswordController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('/dashboard');
 });
 
 Route::get('/formulaire', function () {
     return view('formulaire');
+});
+
+Route::get('/teamformulaire', function () {
+    return view('teamformulaire');
 });
 
 Route::get('/showpassword', [ShowPassword::class, 'show'])->name('showpassword');
@@ -29,6 +35,8 @@ Route::get('/showpassword', [ShowPassword::class, 'show'])->name('showpassword')
 Route::get('/motdepasse', [ShowPassword::class, 'show'])->name('motdepasse');
 
 Route::post('/formulaire', [LoginForm::class, 'store'])->name('LoginForm');
+
+Route::post('/teamformulaire', [TeamForm::class, 'store'])->name('TeamForm');
 
 Route::get('/editpassword/{id}',  [PasswordController::class, 'edit'])->name('editpassword');
 

@@ -9,8 +9,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Team extends Model
 {
     use HasFactory;
-    public function teams(): BelongsToMany
+
+    protected $fillable = ['name'];
+
+    public function users(): BelongsToMany
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class, 'user-team', 'team_id', 'user_id');
     }
 }
+

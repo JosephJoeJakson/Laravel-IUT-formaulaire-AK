@@ -2,7 +2,9 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-    <!-- Add your head content here -->
+<style>
+        form {display:flex; align-items: center; flex-direction: column;justify-content: center}label {margin-top: 2vh;}input, div {margin-bottom: 2vh}body {display:flex; align-items: center; flex-direction: column;justify-content: center;min-height: 90vh}
+        </style>
 </head>
 <body class="antialiased">
     <h1>Modifier vos informations </h1>

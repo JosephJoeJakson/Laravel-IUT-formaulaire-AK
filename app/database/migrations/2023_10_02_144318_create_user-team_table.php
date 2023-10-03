@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        chema::create('user-team', function (Blueprint $table) {
+        Schema::create('user-team', function (Blueprint $table) {
             $table->foreignId('user_id')->constrained();
             $table->foreignId('team_id')->constrained();
         });
