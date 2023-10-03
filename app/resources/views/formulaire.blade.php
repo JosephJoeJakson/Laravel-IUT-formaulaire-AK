@@ -14,25 +14,25 @@
         </style>
     </head>
     <body class="antialiased">
-
+    <h1>{{__('form.add_info')}}</h1>
     <form action="{{route('LoginForm')}}" method="POST">
         @csrf
-        <label for="url" >URL :</label>
+        <label for="url" >{{__('form.website')}}</label>
         <input type="text" name="url" id="url" class="@error('url') is-invalid @enderror">
         @error('url')
         <div class="alert alert-danger">{{ $message }}</div>
         @enderror
-        <label for="email">Login : </label>
+        <label for="email">{{__('form.login')}}</label>
         <input type="text" name="email" id="email" class="@error('email') is-invalid @enderror">
         @error('email')
         <div class="alert alert-danger">{{ $message }}</div>
         @enderror
-        <label for="password">Mot de passe :</label>
+        <label for="password">{{__('form.password')}}</label>
         <input type="password" name="password" id="password" class="@error('password') is-invalid @enderror">
         @error('password')
         <div class="alert alert-danger">{{ $message }}</div>
         @enderror
-        <input type="submit" value="Valider">
+        <input type="submit" value="{{__('form.validate_button')}}">
     </form>
     </body>
 </html>

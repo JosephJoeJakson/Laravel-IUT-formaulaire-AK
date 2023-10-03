@@ -19,7 +19,7 @@ use App\Http\Controllers\TeamForm;
 */
 
 Route::get('/', function () {
-    return view('/dashboard');
+    return view('/auth/login');
 });
 
 Route::get('/formulaire', function () {

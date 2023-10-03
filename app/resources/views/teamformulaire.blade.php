@@ -21,16 +21,14 @@
 
     <form action="{{route('TeamForm')}}" method="POST" class="form">
         @csrf
-        <label for="name" >Nom de la team :</label>
+        <label for="name">{{__('form.team_name_label')}}</label>
         <input type="text" name="name" id="name" class="@error('name') is-invalid @enderror">
         @error('name')
-        <div class="alert alert-danger">Le nom de team est déjà pris, merci d'en choisr un autre</div>
+        <div class="alert alert-danger">{{__('form.team_name_taken')}}</div>
         @enderror
-        <input type="submit" value="Valider">
+        <input type="submit" value="{{__('form.validate_button')}}">
     </form>
     <br>
-    <a href="/dashboard" style="position: absolute; bottom: 10vh; font-weight: bold; text-decoration: none; color:red">-> Vers le Dashboard <-</a>
+    <a href="/dashboard" style="position: absolute; bottom: 10vh; font-weight: bold; text-decoration: none; color:red">-> {{__('form.go_to_dashboard')}} <-</a>
     </body>
 </html>
-
-

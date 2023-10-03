@@ -7,22 +7,22 @@
         </style>
 </head>
 <body class="antialiased">
-    <h1>Modifier vos informations </h1>
+    <h1>{{__('form.modify_info')}}</h1>
     <form method="GET" action="{{ route('updatepassword', ['id' => $password->id]) }}">
         @csrf
-        <label for="site">Site:</label>
+        <label for="site">{{__('form.website')}}</label>
         <input type="text" name="site" id="site" value="{{ $password->site }}" required>
         
-        <label for="login">Login:</label>
+        <label for="login">{{__('form.login')}}</label>
         <input type="text" name="login" id="login" value="{{ $password->login }}" required>
         
-        <label for="password">Password:</label>
+        <label for="password">{{__('form.password')}}</label>
         <input type="text" name="password" id="password" value="{{ $password->password }}" required>
 
         <!-- Hidden field for the password entry ID -->
         <input type="hidden" name="id" value="{{ $password->id }}">
         
-        <button type="submit">Mettre mes informations</button>
+        <button type="submit">{{__('form.up_to_date')}}</button>
     </form>
 </body>
 </html>

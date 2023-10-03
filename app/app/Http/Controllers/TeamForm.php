@@ -40,10 +40,6 @@ class TeamForm extends Controller
     
         return redirect('/');
     }
-    
-
-    
-
 }
 
 

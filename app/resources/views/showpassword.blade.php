@@ -9,22 +9,32 @@
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
-    
+        <style>
+        body {
+            display:flex; align-items: center; flex-direction: column;
+            justify-content: center;
+            min-height: 90vh
+        }
+        </style>
         </head>
     <body class="antialiased">
+    <h1>{{__('form.show_info')}}</h1>
+
         @if($passwords->isNotEmpty())
             @foreach($passwords as $login)
             <div class="login">
-        <p>Site: {{ $login->site }}</p>
-        <p>Login: {{ $login->login }}</p>
-        <p>Mot de passe: {{ $login->password }}</p>
-        <a href="{{ route('editpassword', ['id' => $login->id]) }}">Modifier votre mot de passe</a>
+        <p>{{__('form.website')}} {{ $login->site }}</p>
+        <p>{{__('form.login')}} {{ $login->login }}</p>
+        <p>{{__('form.password')}} {{ $login->password }}</p>
+        <a href="{{ route('editpassword', ['id' => $login->id]) }}">{{__('form.modify_password')}}</a>
     </div>
                 <p>---------------------------------------</p>
             @endforeach
         @else    
-            <p>Aucun mot de passe</p>
+            <p>{{__('form.no_password')}}</p>
+            <a href="/formulaire">{{__('form.here')}}</a>
         @endif
+        <a href="/dashboard" style="position: absolute; bottom: 10vh; font-weight: bold; text-decoration: none; color:red">-> {{__('form.go_to_dashboard')}} <-</a>
     </body>
    
 </html>
