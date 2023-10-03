@@ -35,6 +35,7 @@ services:
     ports:
       - 3310:3306
     environment:
+      MYSQL_DATABASE: iut
       MYSQL_ROOT_PASSWORD: iut
       MYSQL_USER: iut
       MYSQL_PASSWORD: iut
