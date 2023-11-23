@@ -1,21 +1,21 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body { display:flex; align-items: center; flex-direction: column; justify-content: center; min-height: 90vh}
+.containerBody {padding: 20px; min-height: 50vh; border: 2px black solid; min-width: 50vw; display: flex; align-items: center; flex-direction: column; justify-content: center;}
+.goToDashboard{position: absolute; bottom: 10vh; font-weight: bold; transition:.5s; text-decoration: none; color:red; border: 2px black solid; padding:20px}
+.goToDashboard:hover{background-color: pink; transform:translateY(10px)}
+.submit {margin-top:20px; background-color: lightgray; border: 2px black solid; padding: 5px; transition: .5s; cursor: pointer}
+.submit:hover{background-color: lightgreen;}
+label {margin-top:10px}
+</style>
 
-        <title>Laravel-Kaluzny Adrien</title>
-
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
-        <style>
-        form {display:flex; align-items: center; flex-direction: column;justify-content: center}label {margin-top: 2vh;}input, div {margin-bottom: 2vh}body {display:flex; align-items: center; flex-direction: column;justify-content: center;min-height: 90vh}
-        </style>
-    </head>
-    <body class="antialiased">
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Dashboard') }}
+        </h2>
+    </x-slot>
     <h1>{{__('form.add_info')}}</h1>
-    <form action="{{route('LoginForm')}}" method="POST">
+    <form action="{{route('LoginForm')}}" method="POST" class="containerBody">
         @csrf
         <label for="url" >{{__('form.website')}}</label>
         <input type="text" name="url" id="url" class="@error('url') is-invalid @enderror">
@@ -32,9 +32,9 @@
         @error('password')
         <div class="alert alert-danger">{{ $message }}</div>
         @enderror
-        <input type="submit" value="{{__('form.validate_button')}}">
+        <input class="submit" type="submit" value="{{__('form.validate_button')}}">
     </form>
-    </body>
-</html>
+    <a href="/dashboard" class="goToDashboard">{{__('form.go_to_dashboard')}}</a>
+</x-app-layout>
 
 

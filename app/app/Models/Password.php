@@ -14,4 +14,6 @@ class Password extends Model
         return $this->belongsTo(User::class);
     }
     protected $fillable = ['site', 'login', 'password', 'user_id'];
+
 }
+

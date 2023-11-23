@@ -1,33 +1,47 @@
-<x-app-layout>
+<style>
+body { display:flex; align-items: center; flex-direction: column; justify-content: center; min-height: 90vh}
+.containerBody {padding: 50px; border: 2px black solid; min-width: 50vw; min-height: 50vh; display: flex; align-items: start; justify-content: space-evenly;}
+.containerBody1 {background-color: rgb(243 244 246); padding: 20px; border: 2px black solid; display: flex; align-items: center; flex-direction: column; justify-content: center;}
+.containerBody2 {background-color: rgb(243 244 246); padding: 20px; border: 2px black solid;  display: flex; align-items: center; flex-direction: column; justify-content: center;}
+.containerBody a {background-color: lightblue; width:100%; padding: 10px; margin: 5px; border: 2px black solid; transition:.5s}
+.containerBody a:hover {background-color:lightgreen;}
+h1 {margin: 20px !important;}
+</style>
+ <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        {{__('dashboard.dashboard')}}
+            {{ __('Dashboard') }}
         </h2>
-    </x-slot>
+        </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                {{__('dashboard.logged_in')}}
-                    <br>
-                    <br>
-                    <h2>{{__('dashboard.password')}}</h2>
-                    <br>
-                    <a href="/formulaire" style="color:magenta">-> {{__('dashboard.add_passwords')}} <-</a>
-        <br style="margin:20px">
-        <a href="/showpassword" style="color:darkblue">-> {{__('dashboard.see_passwords')}} <-</a>
-        <br>
-        <br>
-        <h2>{{__('dashboard.team')}}</h2>
-        <br>
-        <a href="/teamformulaire" style="color:blue">-> {{__('dashboard.add_team')}} <-</a>
-        <br>
-        <a href="/showteams" style="color:pink">-> {{__('dashboard.show_team')}} <-</a>
-        <br>
-        <a href="/jointeam" style="color:purple">-> {{__('dashboard.join_team')}} <-</a>
-                </div>
-            </div>
-        </div>
+    
+<h1>{{__('form.show_team')}}</h1>
+<div class="containerBody">
+<div class="containerBody1">
+    <h2 class="text-2xl font-bold mb-4">{{__('dashboard.password')}}</h2>
+
+    <a href="/formulaire">
+        {{__('dashboard.add_passwords')}}
+    </a>
+
+    <a href="/showpassword">
+        {{__('dashboard.see_passwords')}}
+    </a>
+
 </div>
-</x-app-layout>
+<div class="containerBody2">
+    <h2 class="text-2xl font-bold mb-4">{{__('dashboard.team')}}</h2>
+    <a href="/teamformulaire" >
+        {{__('dashboard.add_team')}}
+
+    <a href="/showteams">
+        {{__('dashboard.show_team')}}
+    </a>
+
+    <a href="/jointeam" >
+        {{__('dashboard.join_team')}}
+    </a>
+</div>
+</div>
+</x-app-layout> 
+    

@@ -14,9 +14,13 @@ use Validator;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Team;
+use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
+use App\Notifications\PasswordNotification;
+use Illuminate\Support\Facades\Notification;
+
 
 class TeamForm extends Controller
 {
@@ -44,35 +48,71 @@ class TeamForm extends Controller
     }
 
     public function join(Request $request)
-{
-    $user = Auth::user();
+    {
+        $user = Auth::user();
     
-    $validated = Validator::make($request->all(), [
-        'name' => 'string',
-    ]);
+        $validated = Validator::make($request->all(), [
+            'name' => 'required|string',
+            'email' => 'required|email',
+        ]);
+    
+        if ($validated->fails()) {
+            return redirect()->back()->withErrors($validated)->withInput();
+        }
+    
+        $team = Team::where('name', $request->name)->first();
+    
+        if ($team && $team->users->contains($user)) {
+            $existingMember = User::where('email', $request->email)->first();
+    
+            if ($existingMember) {
+                if (!$team->users->contains($existingMember)) {
+                    $team->users()->attach($existingMember->id); // Attach the existing user to the team
+    
+                    // Send notification to all team members
+                    $teamMembers = $team->users->where('id', '<>', $existingMember->id);
+                    $teamMembers->each(function ($teamMember) use ($team, $existingMember, $user) {
+                        $teamMember->notify(new UserAddedToTeamNotification($team, $existingMember, $user));
+                    });
+    
+                    return redirect('/');
+                } else {
+                    // User is already a member of the team
+                    return redirect()->back()->withErrors(['email' => 'User is already a member of the team'])->withInput();
+                }
+            } else {
+                // User not found with the provided email
+                return redirect()->back()->withErrors(['email' => 'User not found'])->withInput();
+            }
+        } else {
+            // Team not found or user not a member of the team
+            return redirect()->back()->withErrors(['name' => __('invalid_name_team')])->withInput();
 
-    if ($validated->fails()) {
-        return redirect()->back()->withErrors($validated)->withInput();
+        }
     }
+    
+public function associatePasswordWithTeam($passwordId, $teamId)
+{
+    // Associate the password with the team
+    $password = Password::find($passwordId);
+    $team = Team::find($teamId);
+    $password->teams()->attach($team);
 
-    $team = Team::where('name', $request->name)->first();
+    // Get all users in the team
+    $teamUsers = $team->users;
 
-    if ($team) {
-        $team->users()->attach($user->id); // Attach the user to the team
-
-        // Send notification to all team members
-        $teamMembers = $team->users->except([$user->id]);
-        $teamMembers->each(function ($teamMember) use ($team, $user) {
-            $teamMember->notify(new UserAddedToTeamNotification($team, $user));
-        });
-
-        return redirect('/');
-    } else {
-        return redirect('/');
-    }
+    // Send notification to each user in the team
+    Notification::send($teamUsers, new PasswordNotification($password, $team));
+    
+    // Other logic...
 }
 
+// Similar logic for modifying and deleting passwords
+
 }
+
+
+
 
 
 
