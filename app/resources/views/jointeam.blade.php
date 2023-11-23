@@ -18,8 +18,8 @@
         </style>
     </head>
     <body class="antialiased">
-
-    <form action="{{route('TeamCreate')}}" method="POST" class="form">
+    <h1>{{__('form.join_team')}}</h1>
+    <form action="{{route('TeamJoin')}}" method="POST" class="form">
         @csrf
         <label for="name">{{__('form.team_name_label')}}</label>
         <input type="text" name="name" id="name" class="@error('name') is-invalid @enderror">

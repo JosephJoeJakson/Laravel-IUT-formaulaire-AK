@@ -6,6 +6,7 @@ use App\Http\Controllers\LoginForm;
 use App\Http\Controllers\ShowPassword;
 use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\TeamForm;
+use App\Http\Controllers\ShowTeams;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,25 +19,40 @@ use App\Http\Controllers\TeamForm;
 |
 */
 
+//Get to the dashboard 
 Route::get('/', function () {
-    return view('/auth/login');
+    return view('/dashboard');
 });
 
+//Aller au forulaire 
 Route::get('/formulaire', function () {
     return view('formulaire');
 });
 
+//Aller au fomulaire de création de team
 Route::get('/teamformulaire', function () {
     return view('teamformulaire');
 });
 
+//aller au formulaire pour rejoindre une team
+Route::get('/jointeam', function () {
+    return view('jointeam');
+});
+
+//Route pour voir tous mot de passe 
 Route::get('/showpassword', [ShowPassword::class, 'show'])->name('showpassword');
 
-Route::get('/motdepasse', [ShowPassword::class, 'show'])->name('motdepasse');
+//Route pour voir les teams dans lesquels vous êtes 
+Route::middleware(['auth'])->get('/showteams', [ShowTeams::class, 'show'])->name('showteams');
 
+//Route pour aller au formulaire d'ajout de mot de passe
 Route::post('/formulaire', [LoginForm::class, 'store'])->name('LoginForm');
 
-Route::post('/teamformulaire', [TeamForm::class, 'store'])->name('TeamForm');
+//Route pour le fomulaire de création de team
+Route::post('/teamformulaire', [TeamForm::class, 'store'])->name('TeamCreate');
+
+Route::post('/jointeam', [TeamForm::class, 'join'])->name('TeamJoin');
+
 
 Route::get('/editpassword/{id}',  [PasswordController::class, 'edit'])->name('editpassword');
 

@@ -9,26 +9,32 @@
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
-      <style>
+        <style>
         body {
             display:flex; align-items: center; flex-direction: column;
             justify-content: center;
             min-height: 90vh
         }
         </style>
-    </head>
+        </head>
     <body class="antialiased">
+    <h1>{{__('form.show_team')}}</h1>
 
-    <form action="{{route('TeamCreate')}}" method="POST" class="form">
-        @csrf
-        <label for="name">{{__('form.team_name_label')}}</label>
-        <input type="text" name="name" id="name" class="@error('name') is-invalid @enderror">
-        @error('name')
-        <div class="alert alert-danger">{{__('form.team_name_taken')}}</div>
-        @enderror
-        <input type="submit" value="{{__('form.validate_button')}}">
-    </form>
-    <br>
-    <a href="/dashboard" style="position: absolute; bottom: 10vh; font-weight: bold; text-decoration: none; color:red">-> {{__('form.go_to_dashboard')}} <-</a>
+        @if($teams->isNotEmpty())
+            @foreach($teams as $team)
+            <div class="login">
+        <p>{{ $team->name}}</p>
+    </div>
+                <p>---------------------------------------</p>
+            @endforeach
+        @else    
+            <p>{{__('form.no_password')}}</p>
+            <a href="/formulaire">{{__('form.here')}}</a>
+        @endif
+        <div  style="heigth: 10vh">.</div>
+        <a href="/dashboard" style="position: fixed; bottom: 10vh; font-weight: bold; text-decoration: none; color:red">-> {{__('form.go_to_dashboard')}} <-</a>
     </body>
+   
 </html>
+
+

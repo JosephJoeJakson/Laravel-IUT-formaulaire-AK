@@ -53,5 +53,5 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Team::class);
         return $this->belongsToMany(Password::class);
-    }
+    }    
 }

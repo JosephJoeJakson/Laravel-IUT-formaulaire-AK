@@ -9,10 +9,13 @@ return [
     'modify_info' => 'Edit Your Information',
     'add_info' => 'Add Your Account',
     'show_info' => 'Your Password',
+    'show_team' => 'Your Teams',
     'login' => 'Your Login:',
+    'join_team' => 'Join a Team:',
     'password' => 'Your Password:',
     'up_to_date' => 'Update',
     'modify_password' => 'Change Your Password',
     'no_password' => 'No password set, create a password',
-    'here' => 'here'
+    'here' => 'here',
+    'team' => 'Team:'
 ];
