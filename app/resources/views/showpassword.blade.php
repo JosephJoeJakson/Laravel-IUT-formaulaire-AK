@@ -3,6 +3,8 @@ body { display:flex; align-items: center; flex-direction: column; justify-conten
 .containerBody {padding: 20px; min-height: 50vh; border: 2px black solid; min-width: 50vw; display: flex; align-items: center; flex-direction: column; justify-content: center;}
 .goToDashboard{position: absolute; bottom: 10vh; font-weight: bold; transition:.5s; text-decoration: none; color:red; border: 2px black solid; padding:20px}
 .goToDashboard:hover{background-color: pink; transform:translateY(10px)}
+.login>a:nth-of-type(1) {padding:10px;color:blue;}
+.login>a:nth-of-type(2) {padding:10px;color:orange;}
 </style>
 
 <x-app-layout>
@@ -20,6 +22,8 @@ body { display:flex; align-items: center; flex-direction: column; justify-conten
                     <p>{{__('form.login')}} {{ $login->login }}</p>
                     <p>{{__('form.password')}} {{ $login->password }}</p>
                     <a href="{{ route('editpassword', ['id' => $login->id]) }}">{{__('form.modify_password')}}</a>
+                    <br>
+                    <a href="{{ route('addpasswordtoteam', ['id' => $login->id]) }}">{{__('form.add_to_team_password')}}</a>
                 </div>
                 <p>---------------------------------------</p>
             @endforeach

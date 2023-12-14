@@ -44,9 +44,4 @@ class LoginForm extends Controller
         return redirect('/');
     }
 
-    // public function show(string $id): View
-    // {
-
-    //     return redirect('/');
-    // }
 }

@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Crypt;
 use App\Models\Password;
+use App\Models\Team;
 
 class ShowPassword extends Controller
 {
@@ -26,7 +27,12 @@ class ShowPassword extends Controller
         $login->password = $decryptedPassword;
         $decryptedPasswords->push($login);
     }
-    
-    return view('showpassword', ['passwords' => $decryptedPasswords]);
+
+    $user = Auth::user();
+    $teams = Team::whereHas('users', function ($query) use ($user) {
+        $query->where('users.id', $user->id);
+    })->with('users')->get();
+
+    return view('showpassword', ['passwords' => $decryptedPasswords, 'teams' => $teams]);
     }
 }

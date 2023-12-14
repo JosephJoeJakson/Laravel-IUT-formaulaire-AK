@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 // use App\Models\User;
+use Illuminate\Support\Facades\Crypt;
 use App\Models\Team;
 
 class ShowTeams extends Controller
@@ -20,8 +21,16 @@ class ShowTeams extends Controller
         $user = Auth::user();
         $teams = Team::whereHas('users', function ($query) use ($user) {
             $query->where('users.id', $user->id);
-        })->get();
-    
-        return view('showteams', ['teams' => $teams]);
+        })->with('users', 'passwords')->get();
+
+        // Decrypt passwords before passing to the view
+        $decryptedTeams = $teams->map(function ($team) {
+            $team->passwords->each(function ($password) {
+                $password->decryptedPassword = Crypt::decryptString($password->password);
+            });
+            return $team;
+        });
+
+        return view('showteams', ['teams' => $decryptedTeams]);
     }
 }

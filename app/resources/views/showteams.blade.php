@@ -17,6 +17,16 @@ body { display:flex; align-items: center; flex-direction: column; justify-conten
         @foreach($teams as $team)
             <div class="login">
                 <p>{{ $team->name}}</p>
+                @foreach($team->users as $user)
+                    <li>{{ $user->name }}</li>
+                @endforeach
+                <p>Liste des mots de pass de la team : </p>
+                
+                @foreach($team->passwords as $password)
+                <p>{{ $password->site }}</p>
+                <p>{{ $password->login }}</p>
+                <p>{{ $password->decryptedPassword }}</p>
+                @endforeach
             </div>
             <p>---------------------------------------</p>
         @endforeach

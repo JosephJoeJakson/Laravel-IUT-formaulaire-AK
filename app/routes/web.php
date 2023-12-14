@@ -53,10 +53,14 @@ Route::post('/teamformulaire', [TeamForm::class, 'store'])->name('TeamCreate');
 
 Route::post('/jointeam', [TeamForm::class, 'join'])->name('TeamJoin');
 
-
-Route::get('/editpassword/{id}',  [PasswordController::class, 'edit'])->name('editpassword');
+Route::get('/editpassword/{id}',  [PasswordController::class, 'getpassword'])->name('editpassword');
 
 Route::get('/updatepassword/{id}',  [PasswordController::class, 'update'])->name('updatepassword');
+
+Route::get('/addpasswordtoteam/{id}',  [PasswordController::class, 'getpasswordandteam'])->name('addpasswordtoteam');
+
+Route::get('/addtoteam/{id}',  [TeamForm::class, 'associatePasswordWithTeam'])->name('addtoteam');
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');

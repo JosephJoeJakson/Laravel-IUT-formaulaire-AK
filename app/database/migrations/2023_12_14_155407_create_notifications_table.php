@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+
 return new class extends Migration
 {
     /**
@@ -18,13 +19,6 @@ return new class extends Migration
             $table->timestamp('read_at')->nullable();
             $table->timestamps();
         });
-
-        Schema::table('notifications', function (Blueprint $table) {
-            $table->foreignId('team_id')->nullable()->constrained();
-            $table->foreignId('user_id')->nullable()->constrained('users');
-            $table->foreignId('added_by_user_id')->nullable()->constrained('users');
-            $table->timestamp('added_at')->nullable();
-        });
     }
 
     /**
@@ -35,4 +29,3 @@ return new class extends Migration
         Schema::dropIfExists('notifications');
     }
 };
-

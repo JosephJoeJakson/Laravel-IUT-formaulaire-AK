@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Notifications\UserAddedToTeamNotification;
+use App\Notifications\PasswordsNotification;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller;
@@ -14,11 +15,11 @@ use Validator;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Team;
+use App\Models\Password;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
-use App\Notifications\PasswordNotification;
 use Illuminate\Support\Facades\Notification;
 
 
@@ -91,24 +92,28 @@ class TeamForm extends Controller
         }
     }
     
-public function associatePasswordWithTeam($passwordId, $teamId)
+    public function associatePasswordWithTeam($passwordId, Request $request)
 {
-    // Associate the password with the team
-    $password = Password::find($passwordId);
-    $team = Team::find($teamId);
-    $password->teams()->attach($team);
+    $user = Auth::user();
 
-    // Get all users in the team
-    $teamUsers = $team->users;
+    $selectedTeam = Team::where('name', $request->team)->first();
 
-    // Send notification to each user in the team
-    Notification::send($teamUsers, new PasswordNotification($password, $team));
-    
-    // Other logic...
+    if ($selectedTeam && $selectedTeam->users->contains($user)) {
+ 
+        $password = Password::find($passwordId);
+        $password->teams()->attach($selectedTeam);
+
+        $teamUsers = $selectedTeam->users;
+
+        foreach ($teamUsers as $teamUser) {
+            $teamUser->notify(new PasswordsNotification($password, $selectedTeam));
+        }
+        return redirect('/showpassword');
+    } else {
+        // Team not found or user not a member of the team
+        return redirect()->back()->withErrors(['team' => __('not_in_team')])->withInput();
+    }
 }
-
-// Similar logic for modifying and deleting passwords
-
 }
 
 
