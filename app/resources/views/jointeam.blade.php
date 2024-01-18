@@ -18,7 +18,19 @@ label {margin-top:10px}
     <form action="{{ route('TeamJoin') }}" method="POST" class="form">
         @csrf
         <label for="name">{{__('form.team_name_label')}}</label>
-        <input type="text" name="name" id="name" class="@error('name') is-invalid @enderror">
+
+        @if($teams->isNotEmpty())
+            <select name="name" id="name" class="@error('name') is-invalid @enderror" required>
+                @foreach($teams as $team)
+                <option value="{{ $team->name}}">{{ $team->name}}</option>
+                @endforeach
+            </select>
+            @else
+            <p>{{__('form.no_password')}}</p>
+            <a href="/formulaire">{{__('form.here')}}</a>
+            @endif    
+
+        <!-- <input type="text" name="name" id="name" class="@error('name') is-invalid @enderror"> -->
         @error('name')
         <div class="alert alert-danger">{{ $message }}</div>
         @enderror

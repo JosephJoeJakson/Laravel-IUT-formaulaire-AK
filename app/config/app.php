@@ -82,8 +82,14 @@ return [
     | to any of the locales which will be supported by the application.
     |
     */
-
-    'locale' => 'en',
+    
+    'locales' => [
+        'en' => 'English',
+        'es' => 'Español',
+        'ch' => '中國人',
+        'bi' => 'Русский',
+        // Add other languages here
+    ],
 
     /*
     |--------------------------------------------------------------------------

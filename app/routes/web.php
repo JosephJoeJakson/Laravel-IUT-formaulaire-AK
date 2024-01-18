@@ -7,6 +7,7 @@ use App\Http\Controllers\ShowPassword;
 use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\TeamForm;
 use App\Http\Controllers\ShowTeams;
+use App\Http\Controllers\LanguageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,10 +22,13 @@ use App\Http\Controllers\ShowTeams;
 
 //Get to the dashboard 
 Route::get('/', function () {
-    return view('/dashboard');
+    return view('/welcome');
 });
 
-//Aller au forulaire 
+//Changer la langue 
+Route::get('lang/{locale}', [LanguageController::class, 'switchLang'])->name('lang.switch');
+
+//Aller au formulaire 
 Route::get('/formulaire', function () {
     return view('formulaire');
 });
@@ -34,21 +38,21 @@ Route::get('/teamformulaire', function () {
     return view('teamformulaire');
 });
 
-//aller au formulaire pour rejoindre une team
+//Aller au formulaire pour rejoindre une team 
 Route::get('/jointeam', function () {
     return view('jointeam');
 });
 
-//Route pour voir tous mot de passe 
+//Voir tout mot de passe 
 Route::get('/showpassword', [ShowPassword::class, 'show'])->name('showpassword');
 
-//Route pour voir les teams dans lesquels vous êtes 
+//Voir les teams dans lesquels l'utilisateur est
 Route::middleware(['auth'])->get('/showteams', [ShowTeams::class, 'show'])->name('showteams');
 
-//Route pour aller au formulaire d'ajout de mot de passe
+//Aller au formulaire d'ajout de mot de passe
 Route::post('/formulaire', [LoginForm::class, 'store'])->name('LoginForm');
 
-//Route pour le fomulaire de création de team
+//Aller au fomulaire de création de team
 Route::post('/teamformulaire', [TeamForm::class, 'store'])->name('TeamCreate');
 
 Route::post('/jointeam', [TeamForm::class, 'join'])->name('TeamJoin');

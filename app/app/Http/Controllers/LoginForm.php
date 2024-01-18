@@ -41,7 +41,7 @@ class LoginForm extends Controller
 
         
 
-        return redirect('/');
+        return redirect('/dashboard');
     }
 
 }

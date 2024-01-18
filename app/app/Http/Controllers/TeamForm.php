@@ -45,7 +45,7 @@ class TeamForm extends Controller
         // Associate the team with the user
         $team->users()->syncWithoutDetaching($userId);
     
-        return redirect('/');
+        return redirect('/dashboard');
     }
 
     public function join(Request $request)
@@ -76,7 +76,7 @@ class TeamForm extends Controller
                         $teamMember->notify(new UserAddedToTeamNotification($team, $existingMember, $user));
                     });
     
-                    return redirect('/');
+                    return redirect('/dashboard');
                 } else {
                     // User is already a member of the team
                     return redirect()->back()->withErrors(['email' => 'User is already a member of the team'])->withInput();

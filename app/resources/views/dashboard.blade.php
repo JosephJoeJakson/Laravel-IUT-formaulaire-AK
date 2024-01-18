@@ -8,14 +8,12 @@ body { display:flex; align-items: center; flex-direction: column; justify-conten
 h1 {margin: 20px !important;}
 </style>
  <x-app-layout>
-    <x-slot name="header">
+ <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
+            {{ __('dashboard.dashboard') }}
         </h2>
-        </x-slot>
+    </x-slot>
 
-    
-<h1>{{__('form.show_team')}}</h1>
 <div class="containerBody">
 <div class="containerBody1">
     <h2 class="text-2xl font-bold mb-4">{{__('dashboard.password')}}</h2>

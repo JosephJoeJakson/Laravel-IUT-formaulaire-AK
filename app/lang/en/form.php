@@ -22,6 +22,7 @@ return [
     'invalid_name_team' => 'Invalid team name',
     'not_in_team' => 'You are no in the team',
     'user_email_label' => 'User\'s email :',
-    'create_team' => 'Create a team'
+    'create_team' => 'Create a team',
+    'team_passwords' => 'Team\'s Passwords : '
 
 ];
