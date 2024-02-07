@@ -29,7 +29,7 @@ h2{font-size:320%}
         @if (Route::has('login'))
         <div class="">
             @auth
-            <a href="{{ url('/dashboard') }}" class="f">Dashboard</a>
+            <a href="{{ route('dashboard') }}" class="f">{{__('dashboard.dashboard')}}</a>
             @else
             <a href="{{ route('login') }}" class="">Log in</a>
 

@@ -10,10 +10,10 @@ body { display:flex; align-items: center; flex-direction: column; justify-conten
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
+        {{__('form.show_team')}}
         </h2>
     </x-slot>
-    <h1 class="title">{{__('form.show_team')}}</h1>
+
     <div class="containerBody">
         <div class="containerBody1">
     @if($teams->isNotEmpty())
@@ -37,11 +37,13 @@ body { display:flex; align-items: center; flex-direction: column; justify-conten
         @endforeach
         @else    
             <p>{{__('form.no_password')}}</p>
-            <a href="/formulaire">{{__('form.here')}}</a>
+
+            <x-nav-link :href="route('password-add')">
+                {{__('form.here')}}
+            </x-nav-link>
         @endif
         </div>
     </div>
     <div  style="heigth: 10vh">.</div>
-    <a href="/dashboard" class="goToDashboard">{{__('form.go_to_dashboard')}}</a>
 </x-app-layout>
 

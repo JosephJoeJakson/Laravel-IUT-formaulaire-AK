@@ -23,9 +23,25 @@ use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Notification;
 
 
-class TeamForm extends Controller
+class TeamController extends Controller
 {
     
+    // Redirection vers le formulaire pour ajouter quelqu'un à une team
+    public function choose() : View {
+        $user = Auth::user();
+        $teams = Team::whereHas('users', function ($query) use ($user) {
+            $query->where('users.id', $user->id);
+        })->with('users')->get();
+
+        return view('teamChoose', ['teams' => $teams]);
+    }
+
+    // Redirection vers le formulaire pour ajouter quelqu'un à une team
+    public function create() : View {
+        return view('teamCreate');
+    }
+
+    // Fonction pour créer une Team
     public function store(Request $request): RedirectResponse
     {
         $userId = Auth::user()->id;
@@ -42,12 +58,12 @@ class TeamForm extends Controller
             'name' => $request->name,
         ]);
     
-        // Associate the team with the user
         $team->users()->syncWithoutDetaching($userId);
     
-        return redirect('/dashboard');
+        return redirect(route('dashboard'));
     }
 
+    // Met un utilisateur dans une Team
     public function join(Request $request)
     {
         $user = Auth::user();
@@ -76,44 +92,38 @@ class TeamForm extends Controller
                         $teamMember->notify(new UserAddedToTeamNotification($team, $existingMember, $user));
                     });
     
-                    return redirect('/dashboard');
+                    return redirect(route('dashboard'));
                 } else {
-                    // User is already a member of the team
                     return redirect()->back()->withErrors(['email' => 'User is already a member of the team'])->withInput();
                 }
             } else {
-                // User not found with the provided email
                 return redirect()->back()->withErrors(['email' => 'User not found'])->withInput();
             }
         } else {
-            // Team not found or user not a member of the team
+
             return redirect()->back()->withErrors(['name' => __('invalid_name_team')])->withInput();
 
         }
     }
     
-    public function associatePasswordWithTeam($passwordId, Request $request)
-{
-    $user = Auth::user();
+    // Afficher les Teams de l'utilisateur
+    public function show(): View
+    {
+        $user = Auth::user();
+        $teams = Team::whereHas('users', function ($query) use ($user) {
+            $query->where('users.id', $user->id);
+        })->with('users', 'passwords')->get();
 
-    $selectedTeam = Team::where('name', $request->team)->first();
+        $decryptedTeams = $teams->map(function ($team) {
+            $team->passwords->each(function ($password) {
+                $password->decryptedPassword = Crypt::decryptString($password->password);
+            });
+            return $team;
+        });
 
-    if ($selectedTeam && $selectedTeam->users->contains($user)) {
- 
-        $password = Password::find($passwordId);
-        $password->teams()->attach($selectedTeam);
-
-        $teamUsers = $selectedTeam->users;
-
-        foreach ($teamUsers as $teamUser) {
-            $teamUser->notify(new PasswordsNotification($password, $selectedTeam));
-        }
-        return redirect('/showpassword');
-    } else {
-        // Team not found or user not a member of the team
-        return redirect()->back()->withErrors(['team' => __('not_in_team')])->withInput();
+        return view('teamDisplay', ['teams' => $decryptedTeams]);
     }
-}
+
 }
 
 

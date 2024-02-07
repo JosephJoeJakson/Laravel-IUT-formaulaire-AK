@@ -18,25 +18,26 @@ h1 {margin: 20px !important;}
 <div class="containerBody1">
     <h2 class="text-2xl font-bold mb-4">{{__('dashboard.password')}}</h2>
 
-    <a href="/formulaire">
+    
+    <a href="{{ route('password-add') }}">
         {{__('dashboard.add_passwords')}}
     </a>
 
-    <a href="/showpassword">
+    <a href="{{ route('password-display') }}">
         {{__('dashboard.see_passwords')}}
     </a>
 
 </div>
 <div class="containerBody2">
     <h2 class="text-2xl font-bold mb-4">{{__('dashboard.team')}}</h2>
-    <a href="/teamformulaire" >
+    <a href="{{ route('team-create') }}" >
         {{__('dashboard.add_team')}}
 
-    <a href="/showteams">
+    <a href="{{ route('team-display') }}">
         {{__('dashboard.show_team')}}
     </a>
 
-    <a href="/jointeam" >
+    <a href="{{ route('team-choose') }}" >
         {{__('dashboard.join_team')}}
     </a>
 </div>

@@ -23,6 +23,8 @@ return [
     'not_in_team' => 'You are no in the team',
     'user_email_label' => 'User\'s email :',
     'create_team' => 'Create a team',
-    'team_passwords' => 'Team\'s Passwords : '
+    'team_passwords' => 'Team\'s Passwords :',
+    'add_team' => 'Add to the team',
+    'choose_team' => 'Choose the team :'
 
 ];
