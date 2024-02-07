@@ -1,6 +1,6 @@
 <nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
     <!-- Primary Navigation Menu -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto px-8 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <div class="flex">
                 <!-- Logo -->
@@ -12,14 +12,31 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
-                </div>
-            </div>
+                  
+                <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                    {{ __('dashboard.dashboard') }}
+                </x-nav-link>
 
-            <!-- Settings Dropdown -->
-            <div class="hidden sm:flex sm:items-center sm:ml-6">
+                <x-nav-link :href="route('password-add')" :active="request()->routeIs('password-add')">
+                    {{__('dashboard.add_passwords')}}
+                </x-nav-link>
+                
+                <x-nav-link :href="route('password-display')" :active="request()->routeIs('password-display')">
+                    {{__('dashboard.see_passwords')}}
+                </x-nav-link>
+
+                <x-nav-link :href="route('team-create')" :active="request()->routeIs('team-create')">
+                    {{__('dashboard.add_team')}}
+                </x-nav-link>
+  
+                <x-nav-link :href="route('team-display')" :active="request()->routeIs('team-show')">
+                    {{__('dashboard.show_team')}}
+                </x-nav-link>
+            </div>
+        </div>
+
+        <!-- Settings Dropdown -->
+        <div class="hidden sm:flex sm:items-center sm:ml-6">
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
@@ -62,6 +79,18 @@
                 </button>
             </div>
         </div>
+        <div class="flex justify-between h-1">
+        <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex font-medium">
+                  
+        @foreach (config('app.locales') as $locale => $language)
+                    <x-nav-link href="{{ route('lang.switch', $locale) }}" >
+                    {{ $language }}
+                    </x-nav-link>
+
+                    @endforeach
+  
+                </div>
+        </div>
     </div>
 
     <!-- Responsive Navigation Menu -->
@@ -70,6 +99,7 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+      
         </div>
 
         <!-- Responsive Settings Options -->
