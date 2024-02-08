@@ -31,10 +31,10 @@ h2{font-size:320%}
             @auth
             <a href="{{ route('dashboard') }}" class="f">{{__('dashboard.dashboard')}}</a>
             @else
-            <a href="{{ route('login') }}" class="">Log in</a>
+            <a href="{{ route('login') }}" class="">{{__('auth.login')}}</a>
 
             @if (Route::has('register'))
-            <a href="{{ route('register') }}" class="">Register</a>
+            <a href="{{ route('register') }}" class="">{{__('auth.register')}}</a>
             @endif
             @endauth
         </div>
