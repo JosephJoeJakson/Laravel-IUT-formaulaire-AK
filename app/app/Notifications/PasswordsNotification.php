@@ -30,7 +30,7 @@ class PasswordsNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->line('Le mot de passe du site : ' . $this->password->site . ' avec pour login : ' . $this->password->login . ' à été ajouté à la team '  . $this->team->name);
+            ->line(__('notification.mdp'). $this->password->site . __('notification.whith') . $this->password->login . __('notification.addteam') . $this->team->name);
     }
 
     public function toArray($notifiable)

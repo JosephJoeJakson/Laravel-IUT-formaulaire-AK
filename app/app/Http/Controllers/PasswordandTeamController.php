@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Password;
 use Illuminate\Http\Request;
 use App\Models\Team;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\PasswordsNotification;
 

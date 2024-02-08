@@ -37,6 +37,6 @@ class UserAddedToTeamNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->line( $this->user->name . ' a été ajouté à l\'équipe ' . $this->team->name . ' par : ' . $this->addedByUser->name . ' le ' . now() );
+            ->line( $this->user->name . __('notification.add') . $this->team->name . __('notification.by') . $this->addedByUser->name . __('notification.when') . now() );
     }
 }
